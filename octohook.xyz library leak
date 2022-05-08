@@ -67,15 +67,15 @@ local library = {
         ['ping'] = 0;
     };
     images = {
-        ['gradientp90'] = '';
-        ['gradientp45'] = '';
-        ['colorhue'] = '';
-        ['colorsat1'] = '';
-        ['colorsat2'] = '';
-        ['colortrans'] = '';
+        ['gradientp90'] = 'https://i.imgur.com/5hmlrjX.png';
+        ['gradientp45'] = 'https://i.imgur.com/5hmlrjX.png';
+        ['colorhue'] = 'https://i.imgur.com/iEOsHFv.png';
+        ['colorsat1'] = 'https://i.imgur.com/wpDRqVH.png';
+        ['colorsat2'] = 'https://i.imgur.com/wpDRqVH.png';
+        ['colortrans'] = 'https://i.imgur.com/IIPee2A.png';
     };
     numberStrings = {['Zero'] = 0, ['One'] = 1, ['Two'] = 2, ['Three'] = 3, ['Four'] = 4, ['Five'] = 5, ['Six'] = 6, ['Seven'] = 7, ['Eight'] = 8, ['Nine'] = 9};
-    signal = loadstring(game:HttpGet('https://octohook.xyz/module/signal.lua'))();
+    signal = loadstring(game:HttpGet('https://raw.githubusercontent.com/Quenty/NevermoreEngine/main/src/signal/src/Shared/Signal.lua'))();
     rainbowColor = c3new(1,0,0);
     mouseBehavior = inputservice.MouseBehavior;
     open = false;
