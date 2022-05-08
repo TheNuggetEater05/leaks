@@ -2182,8 +2182,9 @@ function library:init()
 
                         objs.toggleTooltipBG = utility:Draw('Square', {
                             Size = UDim2.new(0,8,0,8);
+                            Visible = false;
                             ThemeColor = 'Option Background';
-                            ZIndex = z+3;
+                            ZIndex = z+303;
                         })
 
                         if toggle.risky then
@@ -2191,7 +2192,7 @@ function library:init()
                                 ThemeColor = 'Risky Text';
                                 Size = 13;
                                 Font = 2;
-                                ZIndex = z+5;
+                                ZIndex = z+308;
                                 Outline = true;
                                 Text = '[Risky] ';
                                 Parent = objs.toggleTooltipBG;
@@ -2200,7 +2201,7 @@ function library:init()
                                 ThemeColor = 'Primary Text';
                                 Size = 13;
                                 Font = 2;
-                                ZIndex = z+5;
+                                ZIndex = z+308;
                                 Outline = true;
                                 Text = toggle.tooltip;
                                 Parent = objs.toggleTooltipBG;
@@ -2211,7 +2212,7 @@ function library:init()
                                 ThemeColor = 'Primary Text';
                                 Size = 13;
                                 Font = 2;
-                                ZIndex = z+5;
+                                ZIndex = z+308;
                                 Outline = true;
                                 Text = toggle.tooltip;
                                 Parent = objs.toggleTooltipBG;
@@ -2223,7 +2224,7 @@ function library:init()
                             Size = UDim2.new(1,2,1,2);
                             Position = UDim2.new(0,-1,0,-1);
                             ThemeColor = 'Option Border 1';
-                            ZIndex = z+2;
+                            ZIndex = z+302;
                             Parent = objs.toggleTooltipBG;
                         })
 
@@ -2231,7 +2232,7 @@ function library:init()
                             Size = UDim2.new(1,2,1,2);
                             Position = UDim2.new(0,-1,0,-1);
                             ThemeColor = 'Option Border 2';
-                            ZIndex = z+1;
+                            ZIndex = z+301;
                             Parent = objs.toggleTooltipB1;
                         })
 
