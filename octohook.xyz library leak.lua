@@ -94,6 +94,8 @@ library.defaultTheme = {
     ['Border 2']                  = fromrgb(35,35,35);
     ['Border 3']                  = fromrgb(10,10,10);
     ['Primary Text']              = fromrgb(235,235,235);
+    ['Risky Text']                = fromrgb(255, 41, 41);
+    ['Risky Toggle Text']         = fromrgb(175, 21, 21);
     ['Group Background']          = fromrgb(35,35,35);
     ['Selected Tab Background']   = fromrgb(35,35,35);
     ['Unselected Tab Background'] = fromrgb(18,18,18);
@@ -1202,6 +1204,72 @@ function library:init()
                 Parent = objs.background;
             })
 
+            objs.tooltipBg = utility:Draw('Square', {
+                Size = UDim2.new(1, 0, 0, 15);
+                Position = UDim2.new(0, 0, 1, 20);
+                ThemeColor = 'Background';
+                ZIndex = z;
+                Parent = objs.background;
+            })
+
+            objs.tooltipIB1 = utility:Draw('Square', {
+                Size = UDim2.new(1,2,1,2);
+                Position = UDim2.new(0,-1,0,-1);
+                ThemeColor = 'Border 3';
+                ZIndex = z-1;
+                Parent = objs.tooltipBg;
+            })
+
+            objs.tooltipIB2 = utility:Draw('Square', {
+                Size = UDim2.new(1,2,1,2);
+                Position = UDim2.new(0,-1,0,-1);
+                ThemeColor = 'Border 1';
+                ZIndex = z-2;
+                Parent = objs.tooltipIB1;
+            })
+
+            objs.tooltipMB = utility:Draw('Square', {
+                Size = UDim2.new(1,10,1,25);
+                Position = UDim2.new(0,-5,0,-20);
+                ThemeColor = 'Border 2';
+                ZIndex = z-3;
+                Parent = objs.tooltipIB2;
+            })
+
+            objs.tooltipOB1 = utility:Draw('Square', {
+                Size = UDim2.new(1,2,1,2);
+                Position = UDim2.new(0,-1,0,-1);
+                ThemeColor = 'Border 1';
+                ZIndex = z-4;
+                Parent = objs.tooltipMB;
+            })
+
+            objs.tooltipOB2 = utility:Draw('Square', {
+                Size = UDim2.new(1,2,1,2);
+                Position = UDim2.new(0,-1,0,-1);
+                ThemeColor = 'Border 3';
+                ZIndex = z-5;
+                Parent = objs.tooltipOB1;
+            })
+
+            objs.tooltip = utility:Draw('Text', {
+                Position = UDim2.new(0,7,0,22);
+                Color = Color3.fromRGB(255, 0, 0);
+                Text = "UI lib leaked by: Jaydenn#7592";
+                Font = 2;
+                Size = 13;
+                ZIndex = z+1;
+                Outline = true;
+                Parent = objs.tooltipMB;
+            })          
+
+            --objs.tooltipTB = utility:Draw('Square', {
+            --    Size = UDim2.new(1,0,0,1);
+            --    ThemeColor = 'Accent';
+            --    ZIndex = z+1;
+            --    Parent = objs.tooltipBg;
+            --})
+
             objs.title = utility:Draw('Text', {
                 Position = UDim2.new(0,7,0,2);
                 ThemeColor = 'Primary Text';
@@ -2034,6 +2102,8 @@ function library:init()
                         class = 'toggle';
                         flag = data.flag;
                         text = '';
+                        tooltip = '';
+                        risky = false;
                         order = #self.options+1;
                         state = false;
                         callback = function() end;
@@ -2110,12 +2180,90 @@ function library:init()
                             Parent = objs.holder;
                         })
 
+                        objs.toggleTooltipBG = utility:Draw('Square', {
+                            Size = UDim2.new(0,8,0,8);
+                            ThemeColor = 'Option Background';
+                            ZIndex = z+3;
+                        })
+
+                        if toggle.risky then
+                            objs.toggleTooltipRisky = utility:Draw('Text', {
+                                ThemeColor = 'Risky Text';
+                                Size = 13;
+                                Font = 2;
+                                ZIndex = z+5;
+                                Outline = true;
+                                Text = '[Risky] ';
+                                Parent = objs.toggleTooltipBG;
+                            })
+                            objs.toggleTooltip = utility:Draw('Text', {
+                                ThemeColor = 'Primary Text';
+                                Size = 13;
+                                Font = 2;
+                                ZIndex = z+5;
+                                Outline = true;
+                                Text = toggle.tooltip;
+                                Parent = objs.toggleTooltipBG;
+                            })
+                        else
+
+                            objs.toggleTooltip = utility:Draw('Text', {
+                                ThemeColor = 'Primary Text';
+                                Size = 13;
+                                Font = 2;
+                                ZIndex = z+5;
+                                Outline = true;
+                                Text = toggle.tooltip;
+                                Parent = objs.toggleTooltipBG;
+                            })
+                        end
+                        
+
+                        objs.toggleTooltipB1 = utility:Draw('Square', {
+                            Size = UDim2.new(1,2,1,2);
+                            Position = UDim2.new(0,-1,0,-1);
+                            ThemeColor = 'Option Border 1';
+                            ZIndex = z+2;
+                            Parent = objs.toggleTooltipBG;
+                        })
+
+                        objs.toggleTooltipB2 = utility:Draw('Square', {
+                            Size = UDim2.new(1,2,1,2);
+                            Position = UDim2.new(0,-1,0,-1);
+                            ThemeColor = 'Option Border 2';
+                            ZIndex = z+1;
+                            Parent = objs.toggleTooltipB1;
+                        })
+
+                        local ttttttttmouseenter = false
+
                         utility:Connection(objs.holder.MouseEnter, function()
                             objs.border1.ThemeColor = 'Accent';
+                            ttttttttmouseenter = true
+                            objs.toggleTooltipBG.Visible = true
+                            objs.toggleTooltip.Visible = true
+                            while ttttttttmouseenter == true do
+                                task.wait(0.00001)
+                                if toggle.risky then
+                                    objs.text.ThemeColor = 'Risky Toggle Text';
+                                    objs.toggleTooltipBG.Size = UDim2.new(0, objs.toggleTooltip.TextBounds.X + objs.toggleTooltipRisky.TextBounds.X, 0, objs.toggleTooltip.TextBounds.Y + 2)
+                                    objs.toggleTooltip.Position = UDim2.new(1, -(objs.toggleTooltip.TextBounds.X), 1, -(objs.toggleTooltip.TextBounds.Y + 2))
+                                else
+                                    objs.toggleTooltipBG.Size = UDim2.new(0, objs.toggleTooltip.TextBounds.X, 0, objs.toggleTooltip.TextBounds.Y)
+                                end
+                                objs.toggleTooltipBG.Position = UDim2.new(0, game:GetService("UserInputService"):GetMouseLocation().X+15, 0, game:GetService("UserInputService"):GetMouseLocation().Y+15)
+                                
+                            end
+
                         end)
 
                         utility:Connection(objs.holder.MouseLeave, function()
                             objs.border1.ThemeColor = toggle.state and 'Accent' or 'Option Border 1';
+                            
+                            ttttttttmouseenter = false
+                            objs.toggleTooltipBG.Visible = false
+                            objs.toggleTooltip.Visible = false
+                            objs.text.ThemeColor = 'Option Text 3';
                         end)
 
                         utility:Connection(objs.holder.MouseButton1Down, function()
