@@ -110,6 +110,55 @@ library.defaultTheme = {
     ['Option Background']         = fromrgb(35,35,35);
 }
 
+library.Themes = {
+    ['Tokyo Night'] = {
+        ['Accent']                    = fromrgb(93,78,168);
+    ['Background']                = fromrgb(24,24,36);
+    ['Border']                    = fromrgb(16,16,22);
+    ['Border 1']                  = fromrgb(40,39,44);
+    ['Border 2']                  = fromrgb(24,24,36);
+    ['Border 3']                  = fromrgb(10,10,10);
+    ['Primary Text']              = fromrgb(235,235,235);
+    ['Risky Text']                = fromrgb(255, 41, 41);
+    ['Risky Toggle Text']         = fromrgb(175, 21, 21);
+    ['Group Background']          = fromrgb(23,25,33);
+    ['Selected Tab Background']   = fromrgb(24,25,33);
+    ['Unselected Tab Background'] = fromrgb(23,24,33);
+    ['Selected Tab Text']         = fromrgb(245,245,245);
+    ['Unselected Tab Text']       = fromrgb(145,145,145);
+    ['Section Background']        = fromrgb(22,23,31);
+    ['Option Text 1']             = fromrgb(245,245,245);
+    ['Option Text 2']             = fromrgb(195,195,195);
+    ['Option Text 3']             = fromrgb(145,145,145);
+    ['Option Border 1']           = fromrgb(10,10,16);
+    ['Option Border 2']           = fromrgb(37,38,45);
+    ['Option Background']         = fromrgb(9, 10, 12);
+    };
+    ['Default'] = {
+        ['Accent']                    = fromrgb(255,135,255);
+    ['Background']                = fromrgb(18,18,18);
+    ['Border']                    = fromrgb(0,0,0);
+    ['Border 1']                  = fromrgb(60,60,60);
+    ['Border 2']                  = fromrgb(35,35,35);
+    ['Border 3']                  = fromrgb(10,10,10);
+    ['Primary Text']              = fromrgb(235,235,235);
+    ['Risky Text']                = fromrgb(255, 41, 41);
+    ['Risky Toggle Text']         = fromrgb(175, 21, 21);
+    ['Group Background']          = fromrgb(35,35,35);
+    ['Selected Tab Background']   = fromrgb(35,35,35);
+    ['Unselected Tab Background'] = fromrgb(18,18,18);
+    ['Selected Tab Text']         = fromrgb(245,245,245);
+    ['Unselected Tab Text']       = fromrgb(145,145,145);
+    ['Section Background']        = fromrgb(18,18,18);
+    ['Option Text 1']             = fromrgb(245,245,245);
+    ['Option Text 2']             = fromrgb(195,195,195);
+    ['Option Text 3']             = fromrgb(145,145,145);
+    ['Option Border 1']           = fromrgb(50,50,50);
+    ['Option Border 2']           = fromrgb(0,0,0);
+    ['Option Background']         = fromrgb(35,35,35);
+    };
+}
+
 local blacklistedKeys = {
 	Enum.KeyCode.Unknown,
 	Enum.KeyCode.W,
@@ -1255,7 +1304,7 @@ function library:init()
             objs.tooltip = utility:Draw('Text', {
                 Position = UDim2.new(0,7,0,22);
                 Color = Color3.fromRGB(255, 0, 0);
-                Text = "UI lib leaked by: Jaydenn#7592";
+                Text = "UI lib leaked & modified by: Jaydenn#7592";
                 Font = 2;
                 Size = 13;
                 ZIndex = z+1;
@@ -4560,18 +4609,19 @@ function library:CreateSettingsTab(menu)
         end
         library.UpdateThemeColors();
     end})
-    for i,v in next, library.theme do
-        if table.find({'Accent', 'Option Text 1', 'Option Text 2', 'Option Text 3', 'Primary Text'}, i) then
-            colorpickers[i] = themeSection:AddColor({text = i, order = i, color = v, flag = 'theme_'..i, callback = function(c3)
-                library.theme[i] = c3;
-                library.UpdateThemeColors();
-            end});
-            colorpickers[i]:SetColor(v)
-        end
-    end
+    pcall(function()
+        themeSection:AddList({text = 'Theme', flag = 'menu_theme', selected = 'Default', values = {'Default', 'Tokyo Night'}, callback = function(val)
+            for i,v in next, library.Themes[val] do
+                library.theme[i] = v;
+            end
+            library.UpdateThemeColors();
+        end})
+    end)
+    
 
     return settingsTab;
 end
+
 
 getgenv().library = library
 return library
